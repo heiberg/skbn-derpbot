@@ -20,8 +20,9 @@ module.exports = (robot) ->
    robot.hear /guldfisk/i, (res) ->
      res.send "Jeg har hørt at i USA der har de en guldfisk som kan stemme!"
 
-  # Test redis storage connection
+  # Beer test of Redis storage connection
   # ---------------------------
+
   robot.respond /have a beer/i, (res) ->
     # Get number of beers had (coerced to a number).
     totalBeers = robot.brain.get('totalBeers') * 1 or 0
@@ -37,3 +38,10 @@ module.exports = (robot) ->
   robot.respond /sleep it off/i, (res) ->
     robot.brain.set 'totalBeers', 0
     res.reply 'zzzzz'
+
+  # Unicode test
+  # ---------------------------
+
+  robot.respond /tableflip/i, (res) ->
+    res.send "(╯°□°)╯︵ ┻━┻"
+    
