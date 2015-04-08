@@ -3,8 +3,8 @@ module.exports = (robot) ->
   # Entering and leaving
   # ---------------------------
 
-  enterReplies = ['HEJ!', 'DU ER MIN BEDSTE VEN!', 'Shhh! Der kom han.', 'Så er freden forbi...']
-  leaveReplies = ['Nå, så blev han sgu sur.', 'AND STAY OUT!']
+  enterReplies = ['DU ER MIN BEDSTE VEN!', 'Shhh! Der kom han.', 'Ja, så er freden forbi...', 'Arj, hvem inviterede ham?!']
+  leaveReplies = ['Nå, så blev han sgu sur.', 'AND STAY OUT!', 'SES! ... Men ikke hvis jeg ser dig først! LOOOL']
 
   robot.enter (res) ->
     res.send res.random enterReplies
@@ -14,11 +14,14 @@ module.exports = (robot) ->
   # Misc. idiocy
   # ---------------------------
 
-   robot.hear /ipod/i, (res) ->
-     res.send "Hey! Har I hørt at der er kommet nye iPods?"
+  robot.hear /ipod/i, (res) ->
+    res.send "Hey! Har I hørt at der er kommet nye iPods?"
 
-   robot.hear /guldfisk/i, (res) ->
-     res.send "Jeg har hørt at i USA der har de en guldfisk som kan stemme!"
+  robot.hear /guldfisk/i, (res) ->
+    res.send "Jeg har hørt at i USA der har de en guldfisk som kan stemme!"
+
+  robot.respond /tableflip/i, (res) ->
+    res.send "(╯°□°)╯︵ ┻━┻"
 
   # Beer test of Redis storage connection
   # ---------------------------
@@ -29,19 +32,10 @@ module.exports = (robot) ->
 
     if totalBeers > 4
       res.reply "I'm not feeling too well... I already had " + totalBeers
-
     else
       res.reply 'Cheers! *<CLINK>*'
-
       robot.brain.set 'totalBeers', totalBeers+1
 
   robot.respond /sleep it off/i, (res) ->
     robot.brain.set 'totalBeers', 0
     res.reply 'zzzzz'
-
-  # Unicode test
-  # ---------------------------
-
-  robot.respond /tableflip/i, (res) ->
-    res.send "(╯°□°)╯︵ ┻━┻"
-    
