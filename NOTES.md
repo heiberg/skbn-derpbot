@@ -1,0 +1,17 @@
+# Original ```external-scripts.json```
+
+```
+[
+  "hubot-diagnostics",
+  "hubot-help",
+  "hubot-heroku-keepalive",
+  "hubot-google-images",
+  "hubot-google-translate",
+  "hubot-pugme",
+  "hubot-maps",
+  "hubot-redis-brain",
+  "hubot-rules",
+  "hubot-shipit",
+  "hubot-youtube"
+]
+```
