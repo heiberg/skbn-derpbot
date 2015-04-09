@@ -14,6 +14,13 @@ module.exports = (robot) ->
   # Misc. idiocy
   # ---------------------------
 
+  sayOuch = (res) ->
+    ouchReplies = ["AV!", "AAAAV", "Stop det!", "Hey! Jeg siger det til Fusager!", "OUCH!", "ARJ helt ærligt, det gør nas!", "OOOH, lige i nokerne. :-("]
+    res.send res.random ouchReplies
+
+  robot.hear /(slår|smækker|losser|sparker|smadrer|banker) derpbot/i, (res) ->
+    sayOuch(res)
+
   robot.hear /ipod/i, (res) ->
     res.send "Hey! Har I hørt at der er kommet nye iPods?"
 
