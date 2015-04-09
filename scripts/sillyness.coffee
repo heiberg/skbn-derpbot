@@ -26,6 +26,9 @@ module.exports = (robot) ->
   robot.respond /tableflip/i, (res) ->
     res.send "(╯°□°)╯︵ ┻━┻"
 
+  robot.respond /the real rules/i, (res) ->
+    res.send "1: EXTERMINATE"
+
   # Beer test of Redis storage connection
   # ---------------------------
 
