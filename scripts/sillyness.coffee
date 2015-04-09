@@ -28,6 +28,7 @@ module.exports = (robot) ->
 
   robot.respond /the real rules/i, (res) ->
     res.send "1: EXTERMINATE"
+    res.send "2: GOTO RULE 1"
 
   # Beer test of Redis storage connection
   # ---------------------------
