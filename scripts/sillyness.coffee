@@ -40,6 +40,9 @@ module.exports = (robot) ->
     res.send "1: EXTERMINATE"
     res.send "2: GOTO RULE 1"
 
+  robot.respond /pls/i, (res) ->
+    res.send "PLS!"
+
   # Beer test of Redis storage connection
   # ---------------------------
 
