@@ -20,6 +20,9 @@ module.exports = (robot) ->
   robot.hear /guldfisk/i, (res) ->
     res.send "Jeg har hørt at i USA der har de en guldfisk som kan stemme!"
 
+  robot.hear /mac mini/i, (res) ->
+    res.send "WAT? Kommer der ny Mac Mini!?"
+
   robot.respond /tableflip/i, (res) ->
     res.send "(╯°□°)╯︵ ┻━┻"
 
