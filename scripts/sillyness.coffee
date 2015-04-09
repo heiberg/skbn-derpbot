@@ -18,8 +18,11 @@ module.exports = (robot) ->
     ouchReplies = ["AV!", "AAAAV", "Stop det!", "Hey! Jeg siger det til Fusager!", "OUCH!", "ARJ helt ærligt, det gør nas!", "OOOH, lige i nokerne. :-("]
     res.send res.random ouchReplies
 
-  robot.hear /(slår|smækker|losser|sparker|smadrer|banker) derpbot/i, (res) ->
+  robot.hear /(slår|smækker|losser|sparker|smadrer|banker|stikker) derpbot/i, (res) ->
     sayOuch(res)
+
+  robot.hear /vækker derpbot/i, (res) ->
+    res.send "Huh? Hvad? ... Jeg sov ikke!"
 
   robot.hear /ipod/i, (res) ->
     res.send "Hey! Har I hørt at der er kommet nye iPods?"
