@@ -1,61 +1,80 @@
 module.exports = (robot) ->
-  # Beer test of Redis storage connection
-  # ---------------------------
-
-  robot.hear /http\:\/\/(\S*)/i, (res) ->
+  robot.hear /https?\:\/\/(\S*)/i, (res) ->
+    #maxUrlStorage = 1024 * 1024 * 5
+    maxUrlStorage = 700
     getUrl = (url) ->
-      res.send "getUrl"
+      console.log "getUrl"
       allUrls = robot.brain.get('urls')
       if(allUrls == null)
         return false
       result = (item for item in allUrls when item.url is url)[0]
 
     storeUrl = (response, url) ->
-      res.send "storeUrl"
+      console.log "storeUrl"
       saveUrl = {
         userName: response.message.user.name,
-        dateTime: new Date(),
+        dateTime: new Date().toLocaleString(),
         url: url
         }
       allUrls = robot.brain.get('urls')
-      #check size
+      console.log "allUrls.length: " + allUrls.length
+      urlsPruned = pruneUrls(allUrls)
+      console.log "urlsPruned.length: " + urlsPruned.length
+      console.log "allUrls.length: " + allUrls.length
       if(allUrls == null)
         allUrls = []
       allUrls.push saveUrl
       robot.brain.set('urls', allUrls)
 
+    pruneUrls = (urls) ->
+      urlsSize = sizeOfUrls(urls)
+      console.log "urls size:" + urlsSize
+      if(urlsSize >= maxUrlStorage)
+        console.log "urls exceeding maxUrlStorage: " + urlsSize + " >= " + maxUrlStorage
+        #oldest
+        oldestDate = new Date("01-01-3000")
+        for url in urls
+          urlDate = new Date(url.dateTime)
+          # console.log "url.dateTime: " + url.dateTime
+          # console.log "urlDate: " + urlDate
+          # console.log "oldestDate: " + oldestDate
+          # console.log "urlDate.getTime(): " + urlDate.getTime() + " oldestDate.getTime()" + oldestDate.getTime()
+          # console.log urlDate.getTime() < oldestDate.getTime()
+          if(urlDate.getTime() < oldestDate.getTime())
+            oldestDate = urlDate
+            oldestUrl = url
+        console.log "oldestUrl.url: " + oldestUrl.url
+        #remove
+        for key, url of urls
+          if url.url == oldestUrl.url
+            console.log "url.url == oldestUrl.url"
+            console.log "url.url: " + url.url
+            console.log "oldestUrl.url: " + oldestUrl.url
+            console.log "key: " + key
+            urls.splice(key, 1)
+        console.log "urls.length: " + urls.length
+      return urls
+
+    sizeOfUrls = (urls) ->
+      # console.log "sizeOfUrls"
+      totalSize = 0
+      for url in urls
+        # console.log "url.userName.length: " + url.userName.length + " url.dateTime.length: " + url.dateTime.length + " url.url.length: " + url.url.length
+        # console.log "url.userName: " + url.userName + " url.dateTime: " + url.dateTime + " url.url: " + url.url
+        totalSize += url.userName.length
+        totalSize += url.dateTime.length
+        totalSize += url.url.length
+      totalSize
+      
     url = res.match[1]
     
-    res.send "url: " + res.match[1]
-    res.send "message: " + res.message.user.name
+    console.log "url: " + res.match[1]
+    console.log "message: " + res.message.user.name
 
     oldUrl = getUrl(url)
-    res.send "oldUrl: " + oldUrl
+    console.log "oldUrl: " + oldUrl
     if(oldUrl)
-      res.send "OLD! " + oldUrl.userName + " posted " + url + " @ " + oldUrl.dateTime.toLocaleString()
+      console.log "dateTime: " + oldUrl.dateTime
+      res.reply "OldYeller detected old! " + oldUrl.userName + " posted " + url + " @ " + oldUrl.dateTime
     else
       storeUrl(res, url)
-      
-    ###
-    if(isOld(url))
-      dateTime = new Date()
-      res.send "OLD! " + oldUser + " posted this @ " + dateTime.toLocaleString()
-    else
-      storeUrl(url)
-    
-    isOld (url) ->
-      robot.brain.get
-    ###
-
-    # Get number of beers had (coerced to a number).
-    #totalBeers = robot.brain.get('totalBeers') * 1 or 0
-
-    # if totalBeers > 4
-      # res.reply "I'm not feeling too well... I already had " + totalBeers
-    # else
-      # res.reply 'Cheers! *<CLINK>*'
-      # robot.brain.set 'totalBeers', totalBeers+1
-
-  # robot.respond /sleep it off/i, (res) ->
-    # robot.brain.set 'totalBeers', 0
-    # res.reply 'zzzzz'
