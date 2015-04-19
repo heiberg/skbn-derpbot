@@ -91,10 +91,10 @@ module.exports = (robot) ->
     return urls
   
   ensureRedisUrls = ->
-    console.log "OldYeller: ensureRedisUrls"
+    debugLog "OldYeller: ensureRedisUrls"
     urls = robot.brain.get('urls')
     if(urls == null)
-      console.log "OldYeller: no Redis urls detected. Bootstrapping."
+      debugLog "OldYeller: no Redis urls detected. Bootstrapping."
       urls = []
       robot.brain.set('urls', urls)
       
