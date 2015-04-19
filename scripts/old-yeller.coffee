@@ -1,3 +1,5 @@
+maxUrlStorageSize = 1024 * 1024 * 5
+#maxUrlStorageSize = 700
 debug = false
 
 debugLog = (msg) ->
