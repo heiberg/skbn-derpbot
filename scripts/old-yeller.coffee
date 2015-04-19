@@ -21,11 +21,13 @@ module.exports = (robot) ->
   robot.hear /oldyeller info/i, (res) ->
     console.log "OldYeller info"
     console.log "debug: " + debug
-    urls = robot.brain.get('urls')
-    console.log "urls.length: " + urls.length
-    urlsSize = sizeOfUrls(urls)
-    console.log "urls size:" + urlsSize
     console.log "maxUrlStorageSize:" + maxUrlStorageSize
+    urls = robot.brain.get('urls')
+    console.log "urls: " + urls
+    if(urls != null)
+      console.log "urls.length: " + urls.length
+      urlsSize = sizeOfUrls(urls)
+      console.log "urls size:" + urlsSize
     
   robot.hear /oldyeller debug (.*)/i, (res) ->
     if(res.match[1] == "on")
@@ -88,7 +90,16 @@ module.exports = (robot) ->
       debugLog "urls.length: " + urls.length
     return urls
   
+  ensureRedisUrls = ->
+    console.log "OldYeller: ensureRedisUrls"
+    urls = robot.brain.get('urls')
+    if(urls == null)
+      console.log "OldYeller: no Redis urls detected. Bootstrapping."
+      urls = []
+      robot.brain.set('urls', urls)
+      
   robot.hear /https?\:\/\/(\S*)/i, (res) ->
+    ensureRedisUrls()
     url = res.match[1]
     
     debugLog "url: " + res.match[1]
