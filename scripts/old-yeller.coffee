@@ -28,7 +28,7 @@ module.exports = (robot) ->
       console.log "urls.length: " + urls.length
       urlsSize = sizeOfUrls(urls)
       console.log "urls size:" + urlsSize
-    
+
   robot.hear /oldyeller debug (.*)/i, (res) ->
     if(res.match[1] == "on")
       console.log "Debug on"
@@ -89,7 +89,7 @@ module.exports = (robot) ->
           urls.splice(key, 1)
       debugLog "urls.length: " + urls.length
     return urls
-  
+
   ensureRedisUrls = ->
     debugLog "OldYeller: ensureRedisUrls"
     urls = robot.brain.get('urls')
@@ -97,11 +97,11 @@ module.exports = (robot) ->
       debugLog "OldYeller: no Redis urls detected. Bootstrapping."
       urls = []
       robot.brain.set('urls', urls)
-      
+
   robot.hear /https?\:\/\/(\S*)/i, (res) ->
     ensureRedisUrls()
     url = res.match[1]
-    
+
     debugLog "url: " + res.match[1]
     debugLog "message: " + res.message.user.name
 
@@ -109,6 +109,6 @@ module.exports = (robot) ->
     debugLog "oldUrl: " + oldUrl
     if(oldUrl)
       debugLog "dateTime: " + oldUrl.dateTime
-      res.reply "OldYeller detected old! " + oldUrl.userName + " posted " + url + " @ " + oldUrl.dateTime
+      res.reply "OOOOOOLD!!1 " + oldUrl.userName + " posted " + url + " @ " + oldUrl.dateTime
     else
       storeUrl(res, url)
