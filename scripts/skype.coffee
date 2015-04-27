@@ -21,10 +21,10 @@ link_suffix = '.gif'
 isFoundIn = (term, array) ->
   array.indexOf(term) isnt -1
 
-postEmoji = (msg, name) ->
+postEmoji = (msg, name, help_on_error) ->
   if isFoundIn(name, emoji_names)
     msg.send(link_prefix + name + link_suffix)
-  else
+  else if help_on_error
     msg.send("That's not a Skype emoji. Say 'skype list' to me to get a list of all the Skype emojis I know.")
 
 postEmojiList = (msg) ->
@@ -36,4 +36,8 @@ module.exports = (robot) ->
     if cmd == 'list'
       postEmojiList(msg)
     else
-      postEmoji(msg, cmd)
+      postEmoji(msg, cmd, true)
+
+  robot.hear /\(([a-z]+)\)/i, (msg) ->
+    cmd = msg.match[1]
+    postEmoji(msg, cmd, false)
