@@ -19,6 +19,8 @@ emoji_aliases = {
   'flex': 'muscle'
   'gnubbetænder': 'clap'
   'gnubtissetrold': 'heidy'
+  'babkogle': 'heidy'
+  'gufagern': 'heidy'
 }
 link_prefix = 'https://dl.dropboxusercontent.com/u/2439290/skype_gifs/'
 link_suffix = '.gif'
