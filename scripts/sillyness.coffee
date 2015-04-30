@@ -18,7 +18,7 @@ module.exports = (robot) ->
     ouchReplies = ["AV!", "AAAAV", "Stop det!", "Hey! Jeg siger det til Fusager!", "OUCH!", "ARJ helt ærligt, det gør nas!", "OOOH, lige i nokerne. :-("]
     res.send res.random ouchReplies
 
-  robot.hear /(slår|smækker|losser|sparker|smadrer|banker|stikker) derpbot/i, (res) ->
+  robot.hear /(slår|smækker|losser|sparker|smadrer|banker|stikker|slaps|smacks).*derpbot/i, (res) ->
     sayOuch(res)
 
   robot.hear /it is known/i, (res) ->
@@ -29,6 +29,9 @@ module.exports = (robot) ->
 
   robot.hear /ipod/i, (res) ->
     res.send "Hey! Har I hørt at der er kommet nye iPods?"
+
+  robot.hear /imac/i, (res) ->
+    res.send "Jeg synes hellere du skulle købe en Mac Mini og så lægge XBMC på den!"
 
   robot.hear /guldfisk/i, (res) ->
     res.send "Jeg har hørt at i USA der har de en guldfisk som kan stemme!"
