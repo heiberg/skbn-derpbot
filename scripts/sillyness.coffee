@@ -21,6 +21,9 @@ module.exports = (robot) ->
   robot.hear /(slår|smækker|losser|sparker|smadrer|banker|stikker) derpbot/i, (res) ->
     sayOuch(res)
 
+  robot.hear /it is known/i, (res) ->
+    res.send "http://www.madhamburg.com/wp-content/uploads/2014/01/It-is-KNOWN.gif"
+
   robot.hear /vækker derpbot/i, (res) ->
     res.send "Huh? Hvad? ... Jeg sov ikke!"
 
