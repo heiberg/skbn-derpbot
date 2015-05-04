@@ -50,6 +50,7 @@ module.exports = (robot) ->
     ensureRedisAliases(robot)
     keys = []
     aliases = robot.brain.get('aliases')
+    debugLog aliases
     for key, value in aliases
       keys = keys + key
     message = "These are the aliases I know of: " + keys.join(', ')
