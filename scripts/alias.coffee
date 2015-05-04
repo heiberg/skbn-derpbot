@@ -13,6 +13,14 @@ ensureRedisAliases = (robot) ->
     robot.brain.set('aliases', aliases)
 
 module.exports = (robot) ->
+
+  robot.hear /(\#[a-z0-9_-]+)/i, (res) ->
+    ensureRedisAliases(robot)
+    alias = res.match[1]
+    aliases = robot.brain.get('aliases')
+    if aliases[alias] != null
+      res.send(aliases[alias])
+
   robot.respond /alias set (\#[a-z0-9_-]+) (https?\:\/\/\S+)/i, (res) ->
     ensureRedisAliases(robot)
     alias = res.match[1]
@@ -34,9 +42,15 @@ module.exports = (robot) ->
     else
       res.send("No alias named " + alias)
 
-  robot.hear /(\#[a-z0-9_-]+)/i, (res) ->
+  robot.respond /alias clear all/i, (res) ->
+    robot.brain.set('aliases', [])
+    res.send("All aliases cleared.")
+
+  robot.respond /alias list/i, (res) ->
     ensureRedisAliases(robot)
-    alias = res.match[1]
+    keys = []
     aliases = robot.brain.get('aliases')
-    if aliases[alias] != null
-      res.send(aliases[alias])
+    for key, value in aliases
+      keys = keys + key
+    message = "These are the aliases I know of: " + keys.join(', ')
+    res.send(message)
