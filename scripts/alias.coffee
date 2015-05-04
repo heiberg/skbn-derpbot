@@ -14,14 +14,14 @@ ensureRedisAliases = (robot) ->
 
 module.exports = (robot) ->
 
-  robot.hear /(\#[a-z0-9_-]+)/i, (res) ->
+  robot.hear /\#([a-z0-9_-]+)/i, (res) ->
     ensureRedisAliases(robot)
     alias = res.match[1]
     aliases = robot.brain.get('aliases')
     if aliases[alias] != undefined
       res.send(aliases[alias])
 
-  robot.respond /alias set (\#[a-z0-9_-]+) (https?\:\/\/\S+)/i, (res) ->
+  robot.respond /alias set ([a-z0-9_-]+) (https?\:\/\/\S+)/i, (res) ->
     ensureRedisAliases(robot)
     alias = res.match[1]
     url = res.match[2]
@@ -31,7 +31,7 @@ module.exports = (robot) ->
     debugLog "Aliases updated with " + alias
     robot.brain.set('aliases', aliases)
 
-  robot.respond /alias clear (\#[a-z0-9_-]+)/i, (res) ->
+  robot.respond /alias clear ([a-z0-9_-]+)/i, (res) ->
     ensureRedisAliases(robot)
     alias = res.match[1]
     aliases = robot.brain.get('aliases')
@@ -51,6 +51,6 @@ module.exports = (robot) ->
     keys = []
     aliases = robot.brain.get('aliases')
     for key, value of aliases
-      keys.push key
+      keys.push("\#" + key)
     message = "These are the " + keys.length + " aliases I know of: " + keys.join(', ')
     res.send(message)
