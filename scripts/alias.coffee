@@ -18,7 +18,7 @@ module.exports = (robot) ->
     ensureRedisAliases(robot)
     alias = res.match[1]
     aliases = robot.brain.get('aliases')
-    if aliases[alias] != null
+    if aliases[alias] != undefined
       res.send(aliases[alias])
 
   robot.respond /alias set (\#[a-z0-9_-]+) (https?\:\/\/\S+)/i, (res) ->
