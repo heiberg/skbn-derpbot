@@ -9,7 +9,7 @@ ensureRedisAliases = (robot) ->
   aliases = robot.brain.get('aliases')
   if aliases == null
     debugLog "Alias: no Redis aliases detected. Bootstrapping."
-    aliases = []
+    aliases = {}
     robot.brain.set('aliases', aliases)
 
 module.exports = (robot) ->
@@ -28,7 +28,7 @@ module.exports = (robot) ->
     aliases = robot.brain.get('aliases')
     aliases[alias] = url
     res.send("Alias set for "+ alias)
-    debugLog "Aliases updated with " + alias + " to " + aliases
+    debugLog "Aliases updated with " + alias
     robot.brain.set('aliases', aliases)
 
   robot.respond /alias clear (\#[a-z0-9_-]+)/i, (res) ->
@@ -43,15 +43,14 @@ module.exports = (robot) ->
       res.send("No alias named " + alias)
 
   robot.respond /alias clear all/i, (res) ->
-    robot.brain.set('aliases', [])
+    robot.brain.set('aliases', {})
     res.send("All aliases cleared.")
 
   robot.respond /alias list/i, (res) ->
     ensureRedisAliases(robot)
     keys = []
     aliases = robot.brain.get('aliases')
-    debugLog aliases
-    for key, value in aliases
-      keys = keys + key
-    message = "These are the aliases I know of: " + keys.join(', ')
+    for key, value of aliases
+      keys.push key
+    message = "These are the " + keys.length + " aliases I know of: " + keys.join(', ')
     res.send(message)
