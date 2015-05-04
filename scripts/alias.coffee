@@ -42,7 +42,7 @@ module.exports = (robot) ->
     else
       res.send("No alias named " + alias)
 
-  robot.respond /alias clear all/i, (res) ->
+  robot.respond /alias nuke/i, (res) ->
     robot.brain.set('aliases', {})
     res.send("All aliases cleared.")
 
