@@ -27,7 +27,7 @@ module.exports = (robot) ->
   robot.hear /it is known/i, (res) ->
     res.send "http://www.madhamburg.com/wp-content/uploads/2014/01/It-is-KNOWN.gif"
 
-  robot.hear /zepto/i, (res) ->
+  robot.hear /zepto|zetpo/i, (res) ->
     res.send "Zepto er faktisk utrolig godt bygget. Generelt. De er mindst lige så gode som en Apple. Og de er faktisk danske. Der er ikke mange der ved det. De er lidt ligesom Intel ThinkPad. Bare danske."
 
   robot.hear /vækker derpbot/i, (res) ->
