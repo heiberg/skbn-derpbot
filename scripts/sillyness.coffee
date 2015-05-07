@@ -27,6 +27,12 @@ module.exports = (robot) ->
   robot.hear /vækker derpbot/i, (res) ->
     res.send "Huh? Hvad? ... Jeg sov ikke!"
 
+  robot.hear /hold.*kæft.*derpbot/i, (res) ->
+    res.send "Nå ja... Så må man ikke have en mening? Ok da!"
+
+  robot.hear /derpbot.*hold.*kæft/i, (res) ->
+    res.send "JEG PRØVER JO BARE AT HJÆLPE!"
+
   robot.hear /house[ ]?warming/i, (res) ->
     res.send "Oooh, jeg elsker housewarming! ... Men jeg kan ikke se jeg har fået en invitation? Hvornår er det?"
 
