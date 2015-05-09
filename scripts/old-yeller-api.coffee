@@ -18,6 +18,7 @@ module.exports = (robot) ->
 
     debugLog "url: " + url
     debugLog "user: " + res.message.user.name
+    debugLog "channel: " + res.message.user.room
     
     url = getYoutubeVideoId(url)
     apiToken = "xoxp-4345566228-4351839546-4426387439-4edd94"
@@ -25,14 +26,15 @@ module.exports = (robot) ->
 #    if(!apiToken)
 #      res.reply "I couldn't find apiToken in process.env.HUBOT_SLACK_TOKEN. I need human assistance."
     
-    requestUri = 'https://slack.com/api/search.messages?token=' + apiToken + '&query=' + url
+    requestUri = 'https://slack.com/api/search.messages?token=' + apiToken + '&query=' + url + ' in:' + res.message.user.room
     debugLog "requestUri: " + requestUri
     res.http(requestUri).get() (err, result, body) ->
       #debugLog "body: " + body
       response = JSON.parse(body);
-      if(response.messages.total > 0)
-        debugLog "response.messages.total: " + response.messages.total
-        match = response.messages.matches[0]
+      messageCount = response.messages.total
+      if(messageCount > 0)
+        debugLog "messageCount: " + messageCount
+        match = response.messages.matches[messageCount-1] #oldest
         debugLog "match.ts: " + match.ts
         timeMs = match.ts.split("\.")[0]*1000;
         debugLog "timeMs: " + timeMs
