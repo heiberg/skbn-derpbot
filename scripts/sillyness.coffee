@@ -1,5 +1,13 @@
 module.exports = (robot) ->
 
+  randomNum = (max,min=0) ->
+	  return Math.floor(Math.random() * (max - min) + min)
+
+  lpad = (value, padding) ->
+    zeroes = "0"
+    zeroes += "0" for i in [1..padding]
+    (zeroes + value).slice(padding * -1)
+
   # Entering and leaving
   # ---------------------------
 
@@ -66,6 +74,12 @@ module.exports = (robot) ->
 
   robot.respond /pls/i, (res) ->
     res.send "PLS!"
+
+  # Butt stuff
+  # ---------------------------
+
+  robot.hear /(buttsex|numseleg|butt sex|pix i røv)/i, (res) ->
+    res.send "http://lafinjack.net/images/butsaix/butsaix_" + lpad(randomNum(21,1), 2) + ".jpg"
 
   # Beer test of Redis storage connection
   # ---------------------------
