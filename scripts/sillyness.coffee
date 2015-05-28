@@ -32,6 +32,9 @@ module.exports = (robot) ->
   robot.hear /(pets|nusser|aer|kæler).*derpbot/i, (res) ->
     res.send "*PURRRRRRR*"
 
+  robot.hear /padfone/i, (res) ->
+    res.send "http://androidandme.com/wp-content/uploads/2012/10/asus-jonney-shih-630.jpg"
+
   robot.hear /it is known/i, (res) ->
     res.send "http://www.madhamburg.com/wp-content/uploads/2014/01/It-is-KNOWN.gif"
 
