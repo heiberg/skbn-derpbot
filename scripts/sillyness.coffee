@@ -75,7 +75,7 @@ module.exports = (robot) ->
     res.send "Jeg stemte Liberal Alliance fordi de er bedst for miljøet lol!"
 
   robot.hear /nemid/i, (res) ->
-    res.send "http://i.imgur.com/GTzSR.jpg"
+    res.send "NemID: http://i.imgur.com/GTzSR.jpg"
 
   robot.respond /the real rules/i, (res) ->
     res.send "1: EXTERMINATE"
