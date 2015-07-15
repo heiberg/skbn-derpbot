@@ -71,6 +71,9 @@ module.exports = (robot) ->
   robot.hear /tableflip/i, (res) ->
     res.send "(╯°□°)╯︵ ┻━┻"
 
+  robot.hear /blå blok/i, (res) ->
+    res.send "Jeg stemte Liberal Alliance fordi de er bedt for miljøet lol"
+
   robot.respond /the real rules/i, (res) ->
     res.send "1: EXTERMINATE"
     res.send "2: GOTO RULE 1"
