@@ -1,4 +1,4 @@
-debug = false
+debug = true
 
 debugLog = (msg) ->
   if(debug)
@@ -21,10 +21,10 @@ module.exports = (robot) ->
     debugLog "channel: " + res.message.user.room
     
     url = getYoutubeVideoId(url)
-    apiToken = "xoxp-4345566228-4351839546-4426387439-4edd94"
-#    debugLog "apiToken: " + apiToken
-#    if(!apiToken)
-#      res.reply "I couldn't find apiToken in process.env.HUBOT_SLACK_TOKEN. I need human assistance."
+    apiToken = process.env.HUBOT_SLACK_OLDYELLER_TOKEN
+    debugLog "apiToken: " + apiToken
+    if(!apiToken)
+      res.reply "I couldn't find apiToken in process.env.HUBOT_SLACK_OLDYELLER_TOKEN. I need human assistance."
     
     requestUri = 'https://slack.com/api/search.messages?token=' + apiToken + '&query=' + url + ' in:' + res.message.user.room
     debugLog "requestUri: " + requestUri
