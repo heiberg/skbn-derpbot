@@ -1,11 +1,11 @@
-debug = false
+debug = true
 
 debugLog = (msg) ->
   if(debug)
     console.log msg
 
 getYoutubeVideoId = (url) ->
-  videoIdMatch = /v\=.*\&?/i.exec(url)
+  videoIdMatch = /.*youtube.*(v\=\w*)/i.exec(url)
   debugLog "videoIdMatch: " + videoIdMatch 
   if(videoIdMatch && videoIdMatch[0])
     return videoIdMatch[0]
@@ -21,15 +21,20 @@ module.exports = (robot) ->
     debugLog "channel: " + res.message.user.room
     
     url = getYoutubeVideoId(url)
+    
     apiToken = process.env.HUBOT_SLACK_OLDYELLER_TOKEN
     debugLog "apiToken: " + apiToken
     if(!apiToken)
       res.reply "I couldn't find apiToken in process.env.HUBOT_SLACK_OLDYELLER_TOKEN. I need human assistance."
     
-    requestUri = 'https://slack.com/api/search.messages?token=' + apiToken + '&query=' + url + ' in:' + res.message.user.room
+    room = process.env.OLDTESTROOM
+    if(!room)
+        room = res.message.user.room
+
+    requestUri = 'https://slack.com/api/search.messages?token=' + apiToken + '&query=' + url + ' in:' + room
     debugLog "requestUri: " + requestUri
     res.http(requestUri).get() (err, result, body) ->
-      #debugLog "body: " + body
+      debugLog "body: " + body
       response = JSON.parse(body);
       messageCount = response.messages.total
       if(messageCount > 0)
