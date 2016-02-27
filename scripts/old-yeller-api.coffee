@@ -1,4 +1,4 @@
-debug = true
+debug = false
 
 debugLog = (msg) ->
   if(debug)
@@ -45,4 +45,3 @@ module.exports = (robot) ->
         debugLog "timeMs: " + timeMs
         #res.reply "OOOOOOLD!!1 " + match.username + " posted " + match.text + " @ " + new Date(timeMs)
         res.reply "OOOOOOLD!!1 " +  match.permalink
-
